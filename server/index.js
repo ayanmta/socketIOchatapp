@@ -25,10 +25,10 @@ io.on('connection',(socket)=>{
 
     socket.on('join_room',(data)=>{
         const {userName,room} = data
-        console.log('recieved data',userName)
+        console.log('recieved data',userName,room)
         socket.join(room)
 chatRoom = room 
-allUsers.push({ id: socket.id, username, room });
+allUsers.push({ id: socket.id, userName, room });
 const chatRoomUsers = allUsers.filter((user) => user.room === room)
         let __createdtime__=Date.now()
         socket.to(room).emit('recieve_message',{
@@ -36,9 +36,9 @@ const chatRoomUsers = allUsers.filter((user) => user.room === room)
             userName:CHAT_BOT,
             __createdtime__
         })
-        socket.emit('receive_message', {
-            message: `Welcome ${username}`,
-            username: CHAT_BOT,
+        socket.emit('recieve_message', {
+            message: `Welcome ${userName}`,
+            userName: CHAT_BOT,
             __createdtime__,
           });
           socket.to(room).emit('chatroom_users', chatRoomUsers);
